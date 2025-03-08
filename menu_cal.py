@@ -59,8 +59,3 @@ while   True:
         print("Opción invalida. Por favor, seleccione una opcion del 1 al 3.")
     
     input("Presione enter para continuar...")
-    
-
-
-
-    #CREAR 

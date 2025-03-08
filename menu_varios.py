@@ -12,14 +12,14 @@ while   True:
     # Opción 1: Suma
 
     if opcion == "1":
-        
+        print("hola")
 
     # Opción 2: Resta
     elif opcion == "2":
-       
+       print("ADIOS")
     # Opción 3: Salir del programa
     elif opcion == "3":
-       
+       print("NOSE")
     else: 
         print("Opción invalida. Por favor, seleccione una opcion del 1 al 3.")
     
