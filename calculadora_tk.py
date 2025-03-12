@@ -1,115 +1,260 @@
-# Importar la libreria que usaremos 
-import tkinter as tk
-
-#Inicializacion de la ventana 
-ventana = tk.Tk()
-ventana.title("CALCULADORA_TKINTER")
-ventana.geometry("1000x400")
-ventana.config(background="red")
-
-#Entrada de datos x,y que seran los valores con lo que operar
-a = tk.Entry(master = ventana,font="ARIAL 15", width = 10)
-b = tk.Entry(master = ventana,font= "ARIAL 15", width = 10)
-
-titulo = tk.Label (master = ventana, text= "➕➖ CALCULADORA BASICA EN TKINTER ✖️➗", font = "ARIAL 15", bg= "red")
-titulo.place(x = 0 , y = 0)
-
-texto_1 = tk.Label(master = ventana, text = "Ingrese el primer número: ", font="ARIAL 15",bg ="red") 
-texto_1.place(x = 0, y= 30)
-
-texto_2 = tk.Label(master = ventana, text = "Ingrese el segundo número: ", font="ARIAL 15",bg ="red")
-texto_2.place(x = 0, y = 90)
-a.place(x = 40, y = 60)
-b.place(x=40, y =120)
-
-salida = tk.Label(master=ventana, text = "", font="ARIAL 15", bg = "red")
-salida.place(x = 480, y =20)
-
-# Botones y funciones que realizan dichos botones
 
 
-es_y = 150
+def resumen_categorias(gastos: ExpenseList) -> None: 
+    # Esta funcion recibe una lista de gasto
+
+    categorias = {} 
+# se integra un diccionario vacio
+
+    for gasto in gastos: 
+#se empieza un ciclo uno por uno de los elementos 
+        cat = gasto['categoria'] 
+#saca la categoria del gasto actual y la guarda en cat 
+        monto = float(gasto['monto']) 
+# convierte el monto en un numero decimal
+        categorias[cat] = categorias.get(cat, {'total': 0, 'count': 0}) 
+# revisa si la categoria ya esta en el diccionario
+        categorias[cat]['total'] += monto 
+#suma el monto del gasto 
+        categorias[cat]['count'] += 1 
+#aumenta en 1 el contador de gastos
+     
+
+    print("\n📊 Resumen por Categoría") 
+
+    if not categorias: 
+
+        print("No hay datos para mostrar") 
+
+        return 
+
+     
+
+    for cat, datos in categorias.items(): 
+
+        print(f"- {cat}: ${datos['total']:.2f} ({datos['count']} gastos)")
+
+import datetime 
+
+from typing import List, Dict 
+
+ 
+
+Expense = Dict[str, str] 
+
+ExpenseList = List[Expense] 
+
+ 
+
+def mostrar_menu() -> None: 
+
+    print("\n🌟 Gestión de Gastos 🌟") 
+
+    print("1. Agregar gasto") 
+
+    print("2. Ver todos los gastos") 
+
+    print("3. Resumen por categoría") 
+
+    print("4. Reporte mensual") 
+
+    print("5. Salir") 
+
+ 
+
+def obtener_opcion_valida() -> int: 
+
+    while True: 
+
+        try: 
+
+            opcion = int(input("Seleccione una opción: ")) 
+
+            if 1 <= opcion <= 5: 
+
+                return opcion 
+
+            print("⚠️ Opción fuera de rango (1-5)") 
+
+        except ValueError: 
+
+            print("⚠️ Ingrese un número válido") 
+
+ 
+
+def agregar_gasto(gastos: ExpenseList) -> None: 
+
+    print("\n📝 Nuevo Gasto") 
+
+    categoria = input("Categoría (ej. Comida, Transporte): ").capitalize() 
+
+    monto = float(input("Monto: $")) 
+
+    fecha = datetime.date.today().strftime("%Y-%m-%d") 
+
+     
+
+    nuevo_gasto = { 
+
+        'fecha': fecha, 
+
+        'categoria': categoria, 
+
+        'monto': f"{monto:.2f}" 
+
+    } 
+
+     
+
+    gastos.append(nuevo_gasto) 
+
+    print(f"✅ Gasto de ${monto:.2f} en {categoria} registrado") 
+
+ 
+
+def mostrar_gastos(gastos: ExpenseList, titulo: str) -> None: 
+
+    print(f"\n📄 {titulo}") 
+
+    if not gastos: 
+
+        print("No hay registros") 
+
+        return 
+
+         
+
+    print(f"{'Fecha':<12} | {'Categoría':<15} | {'Monto':>10}") 
+
+    print("-" * 45) 
+
+     
+
+    for gasto in gastos: 
+
+        print(f"{gasto['fecha']:<12} | {gasto['categoria']:<15} | ${gasto['monto']:>10}") 
+
+ 
+
+def resumen_categorias(gastos: ExpenseList) -> None: 
+
+    categorias = {} 
+
+    for gasto in gastos: 
 
 
-boton_suma = tk.Button(master = ventana, text= "SUMA",bg ="steel blue", command= lambda: suma(a.get(), b.get()))
-boton_suma.place(x = 40, y = es_y)
-def suma(x,y):
-    x = int (x)
-    y = int(y)
-    resultado = x+y
-    limpiar_celda()
-    resultados(resultado)
+        cat = gasto['categoria'] 
 
+        monto = float(gasto['monto']) 
 
+        categorias[cat] = categorias.get(cat, {'total': 0, 'count': 0}) 
 
-boton_resta = tk.Button(master= ventana,text = "RESTA", bg = "steel blue", command = lambda: resta(a.get(),b.get()))
-boton_resta.place(x = 100, y = es_y)
-def resta(x,y):
-    x = int(x)
-    y = int(y)
-    resultado = x-y
-    limpiar_celda()
-    resultados(resultado)
+        categorias[cat]['total'] += monto 
 
+        categorias[cat]['count'] += 1 
 
-boton_mult = tk.Button(master = ventana, text = "MULTIPLICACIÓN", bg = "steel blue", command= lambda: multiplicacion(a.get(),b.get()))
-boton_mult.place(x= 160, y = es_y)   
-def multiplicacion(x,y):
-    x = int(x)
-    y = int(y)
-    resultado = x*y
-    limpiar_celda()
-    resultados(resultado)
+     
 
+    print("\n📊 Resumen por Categoría") 
 
-boton_div = tk.Button(master=ventana, text="DIVICION", bg = "steel blue", command = lambda: division(a.get(),b.get()))
-boton_div.place(x= 270 , y = es_y)
-def division(x,y):
-    x = int(x)
-    y = int(y)
-    if y != 0:
-        resultado = x/y
-    else:
-        resultado = "No se puede dividir entre cero"
-    limpiar_celda()
-    resultados(resultado)
+    if not categorias: 
 
+        print("No hay datos para mostrar") 
 
-boton_mcm = tk.Button(master= ventana, text="MINIMO COMUN",bg = "steel blue", command = lambda: mcm(a.get(),b.get()))
-boton_mcm.place(x = 340 , y = es_y)
-def mcm(x, y):
-    x = int(x)
-    y = int(y)    
-    mcd = mcdiv(x, y)  
-    mcm = abs(x * y) // mcd
-    limpiar_celda()
-    resultados(mcm)
+        return 
 
+     
 
-def mcdiv(x, y):
-    x = int(x)
-    y = int(y)
-    while y != 0:
-        x, y = y, x % y 
-    return x
+    for cat, datos in categorias.items(): 
 
-boton_mcd = tk.Button(master = ventana, text="MINIMO DIVISOR", bg = "steel blue", command= lambda: mcdivi(a.get(),b.get()))
-boton_mcd.place(x = 450 , y = es_y)
-def mcdivi(x, y):
-    x = int(x)
-    y = int(y)
-    limpiar_celda()
-    resultados(mcdiv(x,y))
+        print(f"- {cat}: ${datos['total']:.2f} ({datos['count']} gastos)") 
 
-resultado = tk.Label(master = ventana, text="==",font= "ARIAL 15" ,bg= "red")
-resultado.place(x = 300, y = 80)
-def resultados(z):
-    salida.config(text=str(z))
-    salida.place(x = 400, y = 80)
+ 
 
-def limpiar_celda():
-    a.delete(0,-1)
-    b.delete(0,-1)
+def reporte_mensual(gastos: ExpenseList) -> None: 
 
+    if not gastos: 
 
-ventana.mainloop()
+        print("\nNo hay gastos registrados") 
+
+        return 
+
+     
+
+    montos = [float(g['monto']) for g in gastos] 
+
+    total = sum(montos) 
+
+    promedio = total / len(montos) 
+
+    max_gasto = max(montos) 
+
+     
+
+    print("\n📈 Reporte Mensual") 
+
+    print(f"Total gastado: ${total:.2f}") 
+
+    print(f"Promedio diario: ${promedio:.2f}") 
+
+    print(f"Gasto más alto: ${max_gasto:.2f}") 
+
+ 
+
+def main(): 
+
+    gastos_ejemplo = [ 
+
+        {'fecha': '2023-10-01', 'categoria': 'Comida', 'monto': '45.50'}, 
+
+        {'fecha': '2023-10-02', 'categoria': 'Transporte', 'monto': '15.00'}, 
+
+        {'fecha': '2023-10-03', 'categoria': 'Entretenimiento', 'monto': '30.00'} 
+
+    ] 
+
+     
+
+    print("¡Bienvenido a tu Gestor de Gastos!") 
+
+    mostrar_gastos(gastos_ejemplo, "Gastos Pre-cargados") 
+
+     
+
+    while True: 
+
+        mostrar_menu() 
+
+        opcion = obtener_opcion_valida() 
+
+         
+
+        if opcion == 1: 
+
+            agregar_gasto(gastos_ejemplo) 
+
+        elif opcion == 2: 
+
+            mostrar_gastos(gastos_ejemplo, "Todos los Gastos") 
+
+        elif opcion == 3: 
+
+            resumen_categorias(gastos_ejemplo) 
+
+        elif opcion == 4: 
+
+            reporte_mensual(gastos_ejemplo) 
+
+        elif opcion == 5: 
+
+            print("\n¡Hasta luego! 🌟") 
+
+            break 
+
+ 
+
+if __name__ == "__main__": 
+
+    main() 
+
+ 
