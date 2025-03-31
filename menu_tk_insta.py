@@ -4,26 +4,29 @@ from PIL import Image, ImageTk
 def ventana_insta():
     ventana = tk.Tk()
     ventana.title("MENU INSTALOADER")
-    ventana.geometry("1080x1990")
-    ventana.config(background= "purple")
+    ventana.geometry("800x1000")
+    ventana.config(background= "lightblue")
     
     #Titulod etexto 
     texto = " INGRESA EL USUARIO PARA DESCARGAR SU FOTO DE PERFIL "
-    titulo = tk.Label(master= ventana, text= texto, bg= "purple", fg= "black", font= ("Arial", 12))
+    titulo = tk.Label(master= ventana, text= texto, bg= "lightblue", fg= "black", font= ("Arial", 15))
     titulo.pack(padx= 10, pady= 10)
     
-    user = tk.Entry(master= ventana, width=40, font= ("Arial", 12), background= "purple")
+    user = tk.Entry(master= ventana, width=40, font= ("Arial", 15), background= "turquoise")
     user.pack(padx= 10, pady= 13)
 
-    descargar = tk.Button(master = ventana, text = "DESCARGAR!!", font= ("Arial", 12), bg= "blue", fg= "white", command= lambda: nom_user())
-    descargar.pack(padx= 30, pady = 20)
+    descargar = tk.Button(master = ventana, text = "DESCARGAR!!", font= ("Arial", 15), bg= "turquoise", fg= "white", command= lambda: nom_user())
+    descargar.place(x = 100, y = 100)
     
-    titulo2 = tk.Label(master= ventana, text= "", bg= "purple", fg= "black", font= ("Arial", 12))
+    titulo2 = tk.Label(master= ventana, text= "", bg= "lightblue", fg= "black", font= ("Arial", 15))
     titulo2.pack(padx= 30, pady= 25)
     
-    imagen_descarga = tk.Label(master= ventana, bg = "purple")
-    imagen_descarga.pack(padx= 30, pady= 30)
+    imagen_descarga = tk.Label(master= ventana, bg = "lightblue")
+    imagen_descarga.pack(padx= 30, pady= 20)
 
+    salir = tk.Button(master = ventana, text= "SALIR", font = ("Arial", 15) , bg = "turquoise", fg = "white", command = lambda: ventana.destroy())
+    salir.place(x = 630, y = 100)
+    
     def nom_user():
         user.delete(0,-1)
         user_name = user.get()
