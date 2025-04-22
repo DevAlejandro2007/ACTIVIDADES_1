@@ -1,5 +1,6 @@
-import requests,instaloader, tkinter as tk 
+import requests,instaloader,tkinter as tk
 from PIL import Image, ImageTk 
+
 
 def ventana_insta():
     ventana = tk.Tk()
